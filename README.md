@@ -6,11 +6,12 @@
 
 如果UserService类依赖了OrderService， 传统我们需要用 'new 类名()' 这种方式来创建一个实例对象，如果是依赖的类比较少，可以选择这种方式。
 一旦依赖的对象多了，重复创建实例对象的话，会让我们的代码更难管理。
+
 这时候我们只需要将 对象的创建和管理交给 spring IOC容器，就像自来水一样，需要用我们就去IOC容器当中取出，大大减少了代码量
 
 
-
 这是类的结构图
+
 ![image](https://user-images.githubusercontent.com/67700636/134616561-9c0be26e-7c7b-493e-be1a-534c44294597.png)
 
 
@@ -24,10 +25,7 @@
 public @interface IocResource {
 }
 
-
-
- // 自定义服务的依赖注入
- 
+// 自定义服务的依赖注入
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
@@ -35,6 +33,7 @@ public @interface IocService {
     String name() default  "";
 
 }
+
 
 2.接着创建两个IService接口， IOrderService 和 IUserService
 
