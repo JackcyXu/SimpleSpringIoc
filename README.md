@@ -16,10 +16,8 @@
 
 1.先创建两个注解  IocService 和 IocResource
 
-/**
- * 自定义属性的依赖注入
- */
 
+//自定义属性的依赖注入
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
@@ -72,14 +70,14 @@ public class OrderService implements IOrderService {
 
 4.创建一个工具类，获取某个包下所有类的信息
 
-/**
- * 获取某个包下面的所有类信息
- */
+
+ //获取某个包下面的所有类信息
+ 
 public class ClassUtils {
 
-    /**
-     * 取得某个接口下所有实现这个接口的类
-     */
+    
+    //  取得某个接口下所有实现这个接口的类
+     
     public static List<Class> getAllClassByInterface(Class c) {
         List<Class> returnClassList = null;
 
