@@ -291,11 +291,11 @@ public class SpringContext {
     }
 
    
-     // 初始化依赖的属性
-     // @param object
-     // @throws IllegalArgumentException
-     // @throws IllegalAccessException
-     
+     /* 初始化依赖的属性
+      @param object
+      @throws IllegalArgumentException
+      @throws IllegalAccessException
+     */
     private void initAttribute(Object object)throws Exception{
         //获取object的所有类型
         Class<? extends Object> classinfo = object.getClass();
@@ -325,12 +325,12 @@ public class SpringContext {
     }
 
     
-     //初始化bean
-     // @param classes
-     // @return
-     // @throws IllegalAccessException
-     // @throws InstantiationException
-     
+      /*初始化bean
+      @param classes
+      @return
+      @throws IllegalAccessException
+      @throws InstantiationException
+     */
     public ConcurrentHashMap<String,Object> initBean(List<Class>classes) throws IllegalAccessException,InstantiationException{
         ConcurrentHashMap<String,Object> map = new ConcurrentHashMap<String, Object>();
         String beanId="";
@@ -399,6 +399,7 @@ public class SpringContext {
 
 
 创建一个测试类
+
 public class SpringIocTest {
     public static void main(String[] args) throws Exception {
         String path = "com.spring.ioc.service.impl";
