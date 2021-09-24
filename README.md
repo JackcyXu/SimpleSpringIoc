@@ -25,9 +25,9 @@ public @interface IocResource {
 }
 
 
-/**
- * 自定义服务的依赖注入
- */
+
+ // 自定义服务的依赖注入
+ 
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
@@ -47,6 +47,7 @@ public interface IOrderService {
 }
 
 3.分别创建两个接口实现类
+
 @IocService(name = "useraze")
 public class UserService implements IUserService {
 
@@ -72,7 +73,7 @@ public class OrderService implements IOrderService {
 
 
  //获取某个包下面的所有类信息
- 
+
 public class ClassUtils {
 
     
@@ -122,11 +123,11 @@ public class ClassUtils {
         return null;
     }
 
-    /**
-     * 从包package中获取所有的Class
-     * @param packageName
-     * @return
-     */
+    
+    // 从包package中获取所有的Class
+    // @param packageName
+   //  @return
+     
     public static List<Class<?>> getClasses(String packageName) {
 
         // 第一个class类的集合
@@ -206,13 +207,13 @@ public class ClassUtils {
         return classes;
     }
 
-    /**
-     * 以文件的形式获取包下的所有类
-     * @param packageName
-     * @param packagePath
-     * @param recursive
-     * @param classes
-     */
+   
+   //  以文件的形式获取包下的所有类
+   //   @param packageName
+    //  @param packagePath
+    //  @param recursive
+     // @param classes
+     
 
     public static void findAndAddClassesInPackageByFile(String packageName,String packagePath,
                                                         final boolean recursive,List<Class<?>> classes){
@@ -255,10 +256,9 @@ public class ClassUtils {
     
 }
 
-5
-/**
- * 初始化bean和bean的字段属性
- */
+
+// 初始化bean和bean的字段属性
+ 
 public class SpringContext {
     private String path;
     /*String :beanId Object:serviceimpl*/
@@ -290,12 +290,12 @@ public class SpringContext {
         return object;
     }
 
-    /**
-     * 初始化依赖的属性
-     * @param object
-     * @throws IllegalArgumentException
-     * @throws IllegalAccessException
-     */
+   
+     // 初始化依赖的属性
+     // @param object
+     // @throws IllegalArgumentException
+     // @throws IllegalAccessException
+     
     private void initAttribute(Object object)throws Exception{
         //获取object的所有类型
         Class<? extends Object> classinfo = object.getClass();
@@ -324,13 +324,13 @@ public class SpringContext {
         }
     }
 
-    /**
-     * 初始化bean
-     * @param classes
-     * @return
-     * @throws IllegalAccessException
-     * @throws InstantiationException
-     */
+    
+     //初始化bean
+     // @param classes
+     // @return
+     // @throws IllegalAccessException
+     // @throws InstantiationException
+     
     public ConcurrentHashMap<String,Object> initBean(List<Class>classes) throws IllegalAccessException,InstantiationException{
         ConcurrentHashMap<String,Object> map = new ConcurrentHashMap<String, Object>();
         String beanId="";
