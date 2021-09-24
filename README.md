@@ -49,8 +49,7 @@ public interface IOrderService {
 
 @IocService(name = "useraze")
 public class UserService implements IUserService {
-
-    /*写的比较简单 这块的属性名称一定要用实现类来命名 且 按照第一个字母要小写的原则 否则很报错的*/
+    //写的比较简单 这块的属性名称一定要用实现类来命名 且 按照第一个字母要小写的原则 否则很报错的
     @IocResource
     private IOrderService orderService;
 
@@ -72,12 +71,8 @@ public class OrderService implements IOrderService {
 
 
  //获取某个包下面的所有类信息
-
-public class ClassUtils {
-
-    
+public class ClassUtils {  
     //  取得某个接口下所有实现这个接口的类
-     
     public static List<Class> getAllClassByInterface(Class c) {
         List<Class> returnClassList = null;
 
