@@ -1,4 +1,7 @@
+
+
 # SimpleSpringIoc
+
 为了更好的理解springIOC实现原理，看了其他博客分析的IOC源码，结合自己的理解，写了一个简单的Demo
 
 ![image](https://user-images.githubusercontent.com/67700636/134616204-0e1f72c1-df6a-4883-be2e-003a467edcf5.png)
@@ -13,17 +16,18 @@
 
 ![image](https://user-images.githubusercontent.com/67700636/134616561-9c0be26e-7c7b-493e-be1a-534c44294597.png)
 
-
 1.先创建两个注解  IocService 和 IocResource
 
-
+```Java
 //自定义属性的依赖注入
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface IocResource {
 }
+```
 
+```Java
 // 自定义服务的依赖注入
 @Documented
 @Target(ElementType.TYPE)
@@ -32,32 +36,44 @@ public @interface IocService {
     String name() default  "";
 
 }
+```
+
 
 
 2.接着创建两个IService接口， IOrderService 和 IUserService
 
+```Java
 public interface IUserService {
     String findOrder(String username);
 }
+```
 
+```Java
 public interface IOrderService {
     String findOrder(String username);
 }
+```
+
+
 
 3.分别创建两个接口实现类
 
+```Java
 @IocService(name = "useraze")
 public class UserService implements IUserService {
     //写的比较简单 这块的属性名称一定要用实现类来命名 且 按照第一个字母要小写的原则 否则很报错的
     @IocResource
     private IOrderService orderService;
 
-    @Override
-    public String findOrder(String username) {
-        return orderService.findOrder(username);
-    }
+@Override
+public String findOrder(String username) {
+    return orderService.findOrder(username);
 }
 
+}
+```
+
+```Java
 @IocService
 public class OrderService implements IOrderService {
     @Override
@@ -65,13 +81,22 @@ public class OrderService implements IOrderService {
         return "用户"+username+"的订单编号是:1001";
     }
 }
+```
+
+
 
 4.创建一个工具类，获取某个包下所有类的信息
 
+```Java
+/**
+ * 获取某个包下面的所有类信息
+ */
+public class ClassUtils {
 
- //获取某个包下面的所有类信息
-public class ClassUtils {  
-    //  取得某个接口下所有实现这个接口的类
+
+    /**
+     * 取得某个接口下所有实现这个接口的类
+     */
     public static List<Class> getAllClassByInterface(Class c) {
         List<Class> returnClassList = null;
 
@@ -116,11 +141,11 @@ public class ClassUtils {
         return null;
     }
 
-    
-    // 从包package中获取所有的Class
-    // @param packageName
-   //  @return
-     
+    /**
+     * 从包package中获取所有的Class
+     * @param packageName
+     * @return
+     */
     public static List<Class<?>> getClasses(String packageName) {
 
         // 第一个class类的集合
@@ -200,13 +225,13 @@ public class ClassUtils {
         return classes;
     }
 
-   
-   //  以文件的形式获取包下的所有类
-   //   @param packageName
-    //  @param packagePath
-    //  @param recursive
-     // @param classes
-     
+    /**
+     * 以文件的形式获取包下的所有类
+     * @param packageName
+     * @param packagePath
+     * @param recursive
+     * @param classes
+     */
 
     public static void findAndAddClassesInPackageByFile(String packageName,String packagePath,
                                                         final boolean recursive,List<Class<?>> classes){
@@ -245,13 +270,19 @@ public class ClassUtils {
 
             }
         }
+
     }
-    
-}
+
+```
 
 
-// 初始化bean和bean的字段属性
- 
+
+​    5  初始化bean和其字段属性
+
+```java
+/**
+ * 初始化bean和bean的字段属性
+ */
 public class SpringContext {
     private String path;
     /*String :beanId Object:serviceimpl*/
@@ -283,11 +314,11 @@ public class SpringContext {
         return object;
     }
 
-   
-     /* 初始化依赖的属性
-      @param object
-      @throws IllegalArgumentException
-      @throws IllegalAccessException
+    /**
+     * 初始化依赖的属性
+     * @param object
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
      */
     private void initAttribute(Object object)throws Exception{
         //获取object的所有类型
@@ -317,12 +348,12 @@ public class SpringContext {
         }
     }
 
-    
-      /*初始化bean
-      @param classes
-      @return
-      @throws IllegalAccessException
-      @throws InstantiationException
+    /**
+     * 初始化bean
+     * @param classes
+     * @return
+     * @throws IllegalAccessException
+     * @throws InstantiationException
      */
     public ConcurrentHashMap<String,Object> initBean(List<Class>classes) throws IllegalAccessException,InstantiationException{
         ConcurrentHashMap<String,Object> map = new ConcurrentHashMap<String, Object>();
@@ -390,20 +421,40 @@ public class SpringContext {
     }
  }
 
+```
 
-创建一个测试类
 
-public class SpringIocTest {
-    public static void main(String[] args) throws Exception {
-        String path = "com.spring.ioc.service.impl";
-        SpringContext context = new SpringContext(path);
+​     
 
-         IUserService userService = (IUserService) context.getBean("useraze");
-        System.out.println(userService.findOrder("xmz"));
-      }
-}
+6. 创建一个测试类
 
-![image](https://user-images.githubusercontent.com/67700636/134621942-e15fe6d5-9b6e-496b-948a-2e62dccd1056.png)
+   ```Java
+   public class SpringIocTest {
+       public static void main(String[] args) throws Exception {
+           String path = "com.spring.ioc.service.impl";
+           SpringContext context = new SpringContext(path);
+   
+   
+            IUserService userService = (IUserService) context.getBean("useraze");
+           System.out.println(userService.findOrder("xmz"));
+       }
+   }
+   ```
+
+   
+
+ ![image-20210924133249795](C:\Users\86180\AppData\Roaming\Typora\typora-user-images\image-20210924133249795.png)
+
+ 
+
+
+​    
+
+ 
+
+ 
+
+、
 
 
 
